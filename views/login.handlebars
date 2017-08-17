@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Snippette's Login</title>
-  </head>
-  <body>
-    <h1>Please log in to continue</h1>
-    <form action='/login' method='post'>
-      <input type='text' name='username' id='username'
-      placeholder='Enter your username'>
-      <input type='text' name='password' id='password'
-      placeholder='Enter your password'>
-      <button>Login</button>
-    </form>
 
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>Snippette's Login</title>
+</head>
+
+<body>
+  <h1>Snippette's Code Snippet Repo</h1>
+  <h3>Login to access Snippette's plethera of awesome
+    code snippets from users around the world!</h3>
+  <p>Haven't registered yet? <a href="/register">Click here to register</a></p>
+  <form class="forms" action="/userLogin" method="post">
+    <input class="username" name="user" placeholder="Enter your username" type="text" />
+    <input class="password" name="password" placeholder="Enter your password" type="text" />
+
+    <button>Login</button>
+
+  </form>
+
+</body>
+
 </html>

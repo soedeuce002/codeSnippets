@@ -7,15 +7,16 @@ const fs = require('fs');
 const session = require('express-session');
 const validator = require('express-validator');
 const flash = require('express-flash-messages');
-const passport = require('passport');
+const passport = require('passport'),
+  LocalStrategy = require('passport-local').Strategy;
 //const loginRouter = require('./routes/login');
 //const snippetsRouter = require('./routes/snippets');
 //const searchRouter = require('./routes/search');
 
-mongoose.Promise = bluebird;
+mongoose.Promise = require('bluebird');
 
-const Users = require('./models/users');
-const Snippets = require('./models/snippets')
+const Users = require('./models/user');
+const Snippets = require('./models/snippets');
 const app = express();
 
 app.engine('handlebars', handlebars());
@@ -49,13 +50,39 @@ app.use(flash());
 
 
 app.get('/', (req, res) => {
-  res.send('hey there!');
+  res.render('home');
+
+  //if statement for if logged in, continue to homepage('/')
+  //else if not logged in go to /login
 });
 
+app.get('/register', (req, res) => {
+  res.render('register')
+})
+
+app.get('/login', (req, res) => {
+  res.render('login')
+})
+
+app.post('/registerUser', (req, res) => {
+  let user = new User(req.body);
+  user.provider = 'local';
+  user.setPassword(req.body.password);
+
+  user
+  .save()
+  .then(() => res.redirect('/'))
+  .catch(err => console.log(err));
+
+})
+
+app.post('/userLogin', (req, res) => {
+
+})
 
 mongoose
   // connect to mongo via mongoose
   .connect('mongodb://localhost:27017/newdb', { useMongoClient: true })
   // now we can do whatever we want with mongoose.
   // configure session support middleware with express-session
-  .then(() => app.listen(3000, () => console.log('ready to roll!!')));
+  .then(() => app.listen(3001, () => console.log('ready to roll!!')));
